@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tap2024/screens/home_screen.dart';
 
@@ -17,8 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final txtUser=TextFormField(
       decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.check),
+        label: Text('Correo Electrónico',style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),),
         icon: Icon(Icons.person),
-        hintText: 'Correo Electrónico',
         hintStyle: TextStyle(fontWeight: FontWeight.bold)
       ),
     );
@@ -26,15 +32,64 @@ class _LoginScreenState extends State<LoginScreen> {
     final txtPwd=TextFormField(
       obscureText: true,
       decoration: const InputDecoration(
+        suffixIcon: Icon(Icons.visibility_off),
+        label: Text('Contraseña', style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),),
         icon: Icon(Icons.key),
-        hintText: 'Contraseña',
         hintStyle: TextStyle(fontWeight: FontWeight.bold)
+      ),
+    );
+
+    final olvidarCont=Align(
+      alignment: Alignment.centerRight,
+      child: Text('¿Olvidó su contraseña?', style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 13,
+        color: Colors.black,
+      ),),
+    );
+
+    final btnValidar=Positioned(
+      bottom: 90,
+      child: ElevatedButton.icon(
+      onPressed: (){
+        isValidating=!isValidating;
+        setState(() {});
+        Future.delayed(const Duration(
+          milliseconds: 6980,
+          ),).then((value) => Navigator.push(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+              )
+              )
+              );
+              },
+              label: const Text('Validar usuario'),
+              icon: const Icon(Icons.login),
+              ),
+    );
+
+    final txtSign=Align(
+      alignment: Alignment.bottomRight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text('¿Aún no tiene cuenta?'),
+          Text('Crear una', style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,//Añadir un Widget
+          ),),
+        ],
       ),
     );
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/FNH.png'),
@@ -54,40 +109,28 @@ class _LoginScreenState extends State<LoginScreen> {
               bottom: 150,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: 120,
+                height: (MediaQuery.of(context).size.height)*.4,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 127, 139, 128).withOpacity(.8),
-                  borderRadius: BorderRadius.circular(40),
+                  borderRadius: BorderRadius.circular(100),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     txtUser,
-                    txtPwd
+                    txtPwd,
+                    const SizedBox(height: 20,),
+                    olvidarCont,
+                    const SizedBox(height: 20,),
+                    btnValidar,
+                    const SizedBox(height: 20,),
+                    txtSign,
                   ],
                 ),
               ),
             ),
-            Positioned(
-              bottom: 90,
-              child: ElevatedButton.icon(
-                onPressed: (){
-                  isValidating=!isValidating;
-                  setState(() {});
-                  Future.delayed(const Duration(
-                    milliseconds: 6980,
-                  ),).then((value) => Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      )
-                    )
-                  );
-                },
-                label: const Text('Validar usuario'),
-                icon: const Icon(Icons.login),
-              ),
-            ),
+            
             Positioned(
               top: 250,
               child: SizedBox(
