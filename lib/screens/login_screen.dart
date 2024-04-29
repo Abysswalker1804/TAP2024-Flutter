@@ -14,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  double progressValue=0.0;
+  bool isLoading=true;
   bool isValidating=true;
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
         isValidating=!isValidating;
         setState(() {});
         Future.delayed(const Duration(
-          milliseconds: 6980,
+          seconds: 3,
+          //milliseconds: 6980,
           ),).then((value) => Navigator.push(
             context, 
             MaterialPageRoute(
@@ -135,9 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
               top: 250,
               child: SizedBox(
                 height: 150,
-                child: !isValidating ? Image.asset('assets/loading.gif'): Container(),
+                child: !isValidating ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 9, 75, 12)),): Container(), //Image.asset('assets/loading.gif')
               ),
             ),
+          
           ],
         ),
       ),
