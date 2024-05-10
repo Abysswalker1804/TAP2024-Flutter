@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tap2024/screens/home_screen.dart';
 import 'package:tap2024/screens/intenciones_screen.dart';
 import 'package:tap2024/screens/login_screen_2.dart';
+import 'package:tap2024/screens/popular_screen.dart';
 import 'package:tap2024/screens/splash_screen.dart';
 import 'package:tap2024/settings/theme_settings.dart';
 import 'package:tap2024/value_listener.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (context,value,child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
+          home: const PopularScreen(),//SplashScreen(),
           theme: value==true? ThemeSettings.darkTheme(context): ThemeSettings.lightTheme(context),
           routes: {
             "/home": (context) => const HomeScreen(),

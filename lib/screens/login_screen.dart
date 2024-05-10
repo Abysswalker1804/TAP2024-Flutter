@@ -1,10 +1,12 @@
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tap2024/screens/home_screen.dart';
+import 'package:tap2024/screens/registro_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -75,6 +77,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
     );
 
+    final txtRegistro=GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegistroScreen())
+        );
+      },
+      child: const Text(
+        'Crear una.', 
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+
     final txtSign=Align(
       alignment: Alignment.bottomRight,
       child: Column(
@@ -82,10 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text('¿Aún no tiene cuenta?'),
-          Text('Crear una', style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,//Añadir un Widget
-          ),),
+          txtRegistro,
         ],
       ),
     );
