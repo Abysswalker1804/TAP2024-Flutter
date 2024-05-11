@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (context,value,child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const PopularScreen(),//SplashScreen(),
+          home: const SplashScreen(),//SplashScreen(),PopularScreen()
           theme: value==true? ThemeSettings.darkTheme(context): ThemeSettings.lightTheme(context),
           routes: {
             "/home": (context) => const HomeScreen(),

@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Crear una.', 
         style: TextStyle(
           fontWeight: FontWeight.bold,
+          color: Color.fromARGB(255, 5, 47, 82),
         ),
       ),
     );
@@ -98,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('¿Aún no tiene cuenta?'),
+          const Text('¿Aún no tiene cuenta?'),
           txtRegistro,
         ],
       ),
