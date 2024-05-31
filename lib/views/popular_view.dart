@@ -15,11 +15,32 @@ class PopularView extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: CachedNetworkImage(
-          fit: BoxFit.fill,
-          imageUrl: 'https://image.tmdb.org/t/p/w500/${popularModel!.backdropPath}',
-          placeholder: (context, url) => const CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbBznjz44UMQEBvKX3FppyjMFajU47p-7Hs1A8Y91kpA&s'),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            CachedNetworkImage(
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fill,
+              imageUrl: 'https://image.tmdb.org/t/p/w500/${popularModel!.backdropPath}',
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbBznjz44UMQEBvKX3FppyjMFajU47p-7Hs1A8Y91kpA&s'),
+            ),
+            Container(
+              height: 60,
+              color: const Color.fromARGB(171, 0, 0, 0),
+              child: ListTile(
+                title: Text(popularModel!.title, style: const TextStyle(color: Colors.white),),
+                subtitle: Text(popularModel!.overview, style: const TextStyle(color: Colors.white), maxLines: 1,),
+                trailing: IconButton(
+                  onPressed: () => Navigator.pushNamed(context, '/detail', arguments: popularModel), 
+                  icon: const Icon(
+                    Icons.chevron_right, 
+                    color: Colors.white,
+                    ),
+                  ),
+              ),
+            ),
+          ],
         ),
       )
     );

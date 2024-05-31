@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -144,140 +145,145 @@ class _RegistroScreenState extends State<RegistroScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20,),
-            selectedImage != null ? Image.file(selectedImage!, height: 50, width: 50,) : const Text('Seleccione una imagen de avatar'),
-                            //    Imagen ^
-            const SizedBox(height: 25,),
-
-            MaterialButton(     //Boton de imagen
-              color: const Color.fromARGB(255, 121, 167, 123),
-              child: const Text('Seleccionar una imagen'),
-              onPressed: (){
-                accionarBottonSheet(context);
-              }),
-
-            const SizedBox(height: 25,),
-
-            TextFormField(//          Campo de usuario
-              controller: usrNickname,
-              decoration: const InputDecoration(
-                hintText: 'Nombre de usuario',
-                icon: Icon(Icons.person)
-              ),
-            ),
-
-            const SizedBox(height: 25,),
-
-            TextFormField(//          Campo de correo
-              controller: emailController,
-              decoration: const InputDecoration(
-                hintText: 'Correo electrónico',
-                icon: Icon(Icons.mail)
-              ),
-            ),
-
-            const SizedBox(height: 25,),
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Column(//Columna de todos los widgets
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20,),
+                selectedImage != null ? Image.file(selectedImage!, height: 50, width: 50,) : const Text('Seleccione una imagen de avatar'),
+                                //    Imagen ^
+                const SizedBox(height: 25,),
             
-            TextFormField(//          Campo contraseña
-              controller: psswdController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Contraseña',
-                icon: Icon(Icons.lock)
-              ),
-            ),
-
-            const SizedBox(height: 20,),
-            //                        Indicaciones Contraseña
-            const Text(
-              '>La contraseña debe de tener mínimo 6 carácteres\n>Al menos un número\n>Al menos un carácter especial',
-              style: TextStyle(
-                fontWeight: FontWeight.bold
-              ),),
+                MaterialButton(     //Boton de imagen
+                  color: const Color.fromARGB(255, 121, 167, 123),
+                  child: const Text('Seleccionar una imagen'),
+                  onPressed: (){
+                    accionarBottonSheet(context);
+                  }),
             
-            const SizedBox(height: 15,),
+                const SizedBox(height: 25,),
             
-            TextFormField(//          Campo contraseña confirmación
-              controller: psswdConfirmationController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Confirmar contraseña',
-                icon: Icon(Icons.password)
-              ),
-            ),
-
-            const SizedBox(height: 25,),
-
-            TextFormField(
-              controller: urlController,
-              decoration: const InputDecoration(
-                hintText: 'URL de GIT',
-                icon: Icon(Icons.code)
-              ),
-            ),
-
-            const SizedBox(height: 25,),
-
-            IntlPhoneField(//         Campo de Teléfono
-              controller: phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Número telefónico',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
+                TextFormField(//          Campo de usuario
+                  controller: usrNickname,
+                  decoration: const InputDecoration(
+                    hintText: 'Nombre de usuario',
+                    icon: Icon(Icons.person)
+                  ),
                 ),
-              ),
-              
-            ),
             
-            const SizedBox(height: 25,),
-
-            TextButton(//              Boton registrar
-              onPressed:()=>{
-                validateImagen(),
-                setState(() {
-                  Future.delayed(const Duration(milliseconds: 500));
-                  validateUsrNickname();
-                }),
-                setState(() {
-                  Future.delayed(const Duration(milliseconds: 500));
-                  validateEmail();
-                }),
-                setState(() {
-                  Future.delayed(const Duration(milliseconds: 500));
-                  if(validatePasswd()){
-                    if(psswdController.text.trim()==psswdConfirmationController.text.trim()){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Las contraseñas coinciden'))
-                      );
-                    }else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Las contraseñas NO coinciden'))
-                      );
-                    }
-                  }
-                }),
-                setState(() {
-                  Future.delayed(const Duration(milliseconds: 500));
-                  validateURL();
-                }),
-                setState(() {
-                  Future.delayed(const Duration(milliseconds: 500));
-                  validatePhoneNumb();
-                }),
-              }, 
-              child: const Text(
-                'Registrar',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 14, 95, 17),
-                  fontSize: 20,
-                ),  
-              )
+                const SizedBox(height: 25,),
+            
+                TextFormField(//          Campo de correo
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    hintText: 'Correo electrónico',
+                    icon: Icon(Icons.mail)
+                  ),
+                ),
+            
+                const SizedBox(height: 25,),
+                
+                TextFormField(//          Campo contraseña
+                  controller: psswdController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Contraseña',
+                    icon: Icon(Icons.lock)
+                  ),
+                ),
+            
+                const SizedBox(height: 20,),
+                //                        Indicaciones Contraseña
+                const Text(
+                  '>La contraseña debe de tener mínimo 6 carácteres\n>Al menos un número\n>Al menos un carácter especial',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  ),),
+                
+                const SizedBox(height: 15,),
+                
+                TextFormField(//          Campo contraseña confirmación
+                  controller: psswdConfirmationController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Confirmar contraseña',
+                    icon: Icon(Icons.password)
+                  ),
+                ),
+            
+                const SizedBox(height: 25,),
+            
+                TextFormField(
+                  controller: urlController,
+                  decoration: const InputDecoration(
+                    hintText: 'URL de GIT',
+                    icon: Icon(Icons.code)
+                  ),
+                ),
+            
+                const SizedBox(height: 25,),
+            
+                IntlPhoneField(//         Campo de Teléfono
+                  controller: phoneController,
+                  decoration: const InputDecoration(
+                    labelText: 'Número telefónico',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),
+                  
+                ),
+                
+                const SizedBox(height: 25,),
+            
+                TextButton(//              Boton registrar
+                  onPressed:()=>{
+                    validateImagen(),
+                    setState(() {
+                      Future.delayed(const Duration(milliseconds: 500));
+                      validateUsrNickname();
+                    }),
+                    setState(() {
+                      Future.delayed(const Duration(milliseconds: 500));
+                      validateEmail();
+                    }),
+                    setState(() {
+                      Future.delayed(const Duration(milliseconds: 500));
+                      if(validatePasswd()){
+                        if(psswdController.text.trim()==psswdConfirmationController.text.trim()){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Las contraseñas coinciden'))
+                          );
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Las contraseñas NO coinciden'))
+                          );
+                        }
+                      }
+                    }),
+                    setState(() {
+                      Future.delayed(const Duration(milliseconds: 500));
+                      validateURL();
+                    }),
+                    setState(() {
+                      Future.delayed(const Duration(milliseconds: 500));
+                      validatePhoneNumb();
+                    }),
+                  }, 
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 14, 95, 17),
+                      fontSize: 20,
+                    ),  
+                  )
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
