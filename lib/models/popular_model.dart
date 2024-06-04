@@ -41,3 +41,13 @@ class PopularModel {
   }
 
 }
+
+class PopularModelVideoID{
+  String id;
+  PopularModelVideoID({
+    required this.id
+  });
+  factory PopularModelVideoID.fromMap(Map<String,dynamic> map){
+    return PopularModelVideoID(id: map['key']??'',);
+  }
+}
