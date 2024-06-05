@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tap2024/models/ActorModel.dart';
 import 'package:tap2024/models/popular_model.dart';
 import 'package:tap2024/network/api_popular.dart';
+import 'package:tap2024/views/actor_view.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:ui';
 
@@ -139,6 +141,36 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          FutureBuilder(
+            future: apiPopular!.getActors(popularModel.id.toString()), 
+            builder: (context, AsyncSnapshot<List<ActorModel>?> snapshoActor){
+              if(snapshoActor.hasData){
+                  return Column(
+                          children: [
+                            SizedBox(height: 20,),
+                            Text('Con la actuación de ${snapshoActor.data!.first.name} \ncomo \'${snapshoActor.data!.first.character}\'',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            SizedBox(height: 10,),
+                            Text('Y ${snapshoActor.data![1].name} \ncomo \'${snapshoActor.data![1].character}\'',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                          ],
+                        );
+              }else{
+                if(snapshoActor.hasError){
+                  return Center(
+                    child: Text('Ocurrió un error'));
+                }else{
+                    return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }
+            },
+          )
         ]),
       ),
     );
