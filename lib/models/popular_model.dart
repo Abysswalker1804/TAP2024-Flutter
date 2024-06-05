@@ -10,6 +10,7 @@ class PopularModel {
   String title;
   double voteAverage;
   int voteCount;
+  String videoKey;
 
   PopularModel({
     required this.backdropPath,
@@ -23,6 +24,7 @@ class PopularModel {
     required this.title,
     required this.voteAverage,
     required this.voteCount,
+    required this.videoKey,
   });
 
   factory PopularModel.fromMap(Map<String,dynamic> map){
@@ -37,17 +39,21 @@ class PopularModel {
       releaseDate: map['release_date'] ?? '', 
       title: map['title'] ?? '', 
       voteAverage: map['vote_average'] ?? 0, 
-      voteCount: map['vote_count'] ?? 0,);
+      voteCount: map['vote_count'] ?? 0,
+      videoKey: map['key'] ?? '',
+      );
+      
   }
 
 }
 
 class PopularModelVideoID{
-  String id;
+  String key;
   PopularModelVideoID({
-    required this.id
+    required this.key
   });
   factory PopularModelVideoID.fromMap(Map<String,dynamic> map){
-    return PopularModelVideoID(id: map['key']??'',);
+    return PopularModelVideoID(key: map['key']??'',);
   }
+
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:tap2024/models/popular_model.dart';
+import 'package:tap2024/models/videoModel.dart';
 
 class ApiPopular{
   Uri uri =Uri.parse('https://api.themoviedb.org/3/movie/popular?api_key=23c70b0f2860ec282f0d2bb5732bf07e&language=es-MX&page=1');
@@ -17,8 +18,8 @@ class ApiPopular{
     return null;
   }
 
-  Future<List<PopularModel>?> getVideoID(String id) async{
-    Uri url= Uri.parse('https://api.themoviedb.org/3/movie/$id/videos?api_key=23c70b0f2860ec282f0d2bb5732bf07e');
+  Future<List<PopularModel>?> getImage(String path) async{
+    Uri url=Uri.parse('https://image.tmdb.org/t/p/w500$path');
     Response response=await http.get(url);
     if(response.statusCode==200){
       final jsonPopular=jsonDecode(response.body)['results'] as List;
@@ -26,5 +27,23 @@ class ApiPopular{
     }
     return null;
   }
+
+  Future<String?> getVideoKey(String key) async {
+  Uri url = Uri.parse('https://api.themoviedb.org/3/movie/$key/videos?api_key=23c70b0f2860ec282f0d2bb5732bf07e');
+  try {
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body)['results'] as List;
+      
+      final key= jsonData.map((item) => VideoModel.fromMap(item)).toList();
+      return key.first.key;
+    } else {
+      print('Error en la solicitud: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error al obtener los datos: $e');
+  }
+  return null;
+}
 }
 
